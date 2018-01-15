@@ -1,3 +1,10 @@
-1) No Video da "Aula 5 - Melhorando a experiência do usuário" não ocorre a
+1) Como ele utiliza varias tags do bootstrap é interessante deixar o curso
+de bootstrap como pre-requisito;
+
+2) No Video da "Aula 5 - Melhorando a experiência do usuário" não ocorre a
 explicação no modulo ngAnimate, o efeito da animação só funcionou depois
-que esse modulo foi carregado.
+que esse modulo foi carregado;
+
+3) Na "Aula 6 - Dividir para conquistar!" ele fala de uma propriedade chamada
+base do html 5, mas no curso basico e avançado de HMLT e CSS não foi explicado
+essa tag.
