@@ -42,4 +42,23 @@ angular.module('minhasDiretivas',[])
   ddo.templateUrl = 'js/directives/minha-foto.html';
 
   return ddo;
-});
+})
+.directive('meuBotaoPerigo',function(){
+  //directive definition object
+  var ddo = {};
+  //A -> Atributo
+  //E -> Elemento
+  ddo.restrict = "E";
+
+  ddo.scope = {
+    nome: '@',
+    acao: '&'
+  };
+
+  ddo.transclude = true;
+
+  ddo.template = '<button class="btn btn-danger btn-block" ng-click="acao(foto)">{{nome}}</button>';
+
+  return ddo;
+})
+;
