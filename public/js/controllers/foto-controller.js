@@ -34,6 +34,7 @@ angular.module('alurapic').controller('FotoController',function($scope, $http, $
               .success(function(){
                 $scope.foto = {};
                 $scope.mensagem = 'Foto incluida com Sucesso';
+                $scope.formulario.$setPristine();
               })
               .error(function(erro){
                 console.log(erro);
