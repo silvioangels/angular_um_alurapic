@@ -1,51 +1,51 @@
-angular.module('meusServicos',['ngResource'])
-.factory('recursoFoto',function($resource){
+angular.module('meusServicos', ['ngResource'])
+	.factory('recursoFoto', function($resource) {
 
-  return $resource('v1/fotos/:fotoId', null, {
-    update : {
-        method: 'PUT'
-    }
-  });
+		return $resource('/v1/fotos/:fotoId', null, {
+			'update' : { 
+				method: 'PUT'
+			}
+		});
+	})
+	.factory("cadastroDeFotos", function(recursoFoto, $q, $rootScope) {
+		
+		var evento = 'fotoCadastrada';
 
-})
-.factory('cadastroDeFotos', function(recursoFoto, $q){
-  var servico = {};
+		var service = {};
 
-  servico.cadastrar = function (foto) {
-    return $q(function(resolve, reject){
-      if(foto._id){
+		service.cadastrar = function(foto) {
+			return $q(function(resolve, reject) {
 
-        recursoFoto.update({fotoId: foto._id}, foto, function(){
-            resolve({
-              mensagem: 'Foto '+foto.titulo+' atualizada com sucesso',
-              inclusao: false
-            });
-        }, function(erro){
-            console.log(erro);
-            reject({
-              mensagem: 'Não foi possivel alterar a foto '+foto.titulo
-            });
-        });
+				if(foto._id) {
+					recursoFoto.update({fotoId: foto._id}, foto, function() {
 
-      }else{
+						$rootScope.$broadcast(evento);
+						resolve({
+							mensagem: 'Foto ' + foto.titulo + ' atualizada com sucesso',
+							inclusao: false
+						});
+					}, function(erro) {
+						console.log(erro);
+						reject({
+							mensagem: 'Não foi possível atualizar a foto ' + foto.titulo
+						});
+					});
 
-        recursoFoto.save(foto, function(){
-          resolve({
-            mensagem: 'foto '+foto.titulo+' incluida com sucesso',
-            inclusao: true
-          });
-
-        },function (erro){
-            console.log(erro);
-            reject({
-              mensagem: 'Não foi possivel incluir a foto '+foto.titulo
-            })
-        });
-
-      }
+				} else {
+					recursoFoto.save(foto, function() {
+						$rootScope.$broadcast(evento);
+						resolve({
+							mensagem: 'Foto ' + foto.titulo + ' incluída com sucesso',
+							inclusao: true
+						});
+					}, function(erro) {
+						console.log(erro);
+						reject({
+							mensagem: 'Não foi possível incluir a foto ' + foto.titulo
+						});
+					});
+				}
+			});
+		};
+		return service;
     });
-  };
-
-  return servico;
-
-});
