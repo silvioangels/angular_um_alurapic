@@ -50,6 +50,8 @@ angular.module('minhasDiretivas',[])
   //E -> Elemento
   ddo.restrict = "E";
 
+  //@ -> Valor que passar dentro do texto
+  //& -> Executa a expressao
   ddo.scope = {
     nome: '@',
     acao: '&'
@@ -60,5 +62,26 @@ angular.module('minhasDiretivas',[])
   ddo.template = '<button class="btn btn-danger btn-block" ng-click="acao(foto)">{{nome}}</button>';
 
   return ddo;
+})
+.directive('meuFocus', function(){
+    var ddo = {};
+
+    ddo.restrict = "A";
+
+    //= -> qualquer alteracao que tiver, os 2 lados vao ficar sabendo
+    ddo.scope = {
+      focado: '='
+    };
+
+    ddo.link = function(scope, element){
+        scope.$watch('focado', function(){
+            if(scope.focado){
+              element[0].focus();
+              scope.focado = false;
+            }
+        });
+    }
+
+    return ddo;
 })
 ;
